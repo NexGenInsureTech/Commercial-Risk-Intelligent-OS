@@ -1,0 +1,7 @@
+{
+  "default": {
+    "financialStrength": 0.4,
+    "industryRisk": 0.3,
+    "claimsHistory": 0.3
+  }
+}

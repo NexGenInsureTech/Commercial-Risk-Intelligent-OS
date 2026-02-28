@@ -1,0 +1,37 @@
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+}
+
+.sidebar {
+  width: 220px;
+  background: #1f2937;
+  color: white;
+  padding: 20px;
+  height: 100vh;
+}
+
+.sidebar button {
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  border: none;
+  background: #374151;
+  color: white;
+  cursor: pointer;
+}
+
+.main {
+  flex: 1;
+  padding: 30px;
+  background: #f3f4f6;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
