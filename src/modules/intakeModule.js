@@ -1,6 +1,6 @@
 
 import { generateDecision } from "../core/decisionOrchestrator.js";
-import { saveProspect } from "./mockDB.js";
+import { getState, setState } from "../core/stateManager.js";
 
 export function renderIntake(container) {
   container.innerHTML = `
@@ -9,19 +9,21 @@ export function renderIntake(container) {
       <input id="financialStrength" placeholder="Financial Strength (0-100)" /><br/><br/>
       <input id="industryRisk" placeholder="Industry Risk (0-100)" /><br/><br/>
       <input id="claimsHistory" placeholder="Claims History (0-100)" /><br/><br/>
-      <button onclick="submitIntake()">Submit</button>
+      <button id="submitBtn">Submit</button>
     </div>
   `;
-}
 
-window.submitIntake = function() {
-  const data = {
-    financialStrength: Number(document.getElementById("financialStrength").value),
-    industryRisk: Number(document.getElementById("industryRisk").value),
-    claimsHistory: Number(document.getElementById("claimsHistory").value)
+  document.getElementById("submitBtn").onclick = () => {
+    const data = {
+      financialStrength: Number(document.getElementById("financialStrength").value),
+      industryRisk: Number(document.getElementById("industryRisk").value),
+      claimsHistory: Number(document.getElementById("claimsHistory").value)
+    };
+
+    const decision = generateDecision(data);
+    const current = getState().prospects;
+    setState({ prospects: [...current, decision] });
+
+    alert("Prospect Saved. Score: " + decision.score);
   };
-
-  const decision = generateDecision(data);
-  saveProspect(decision);
-  alert("Prospect Saved. Score: " + decision.score);
-};
+}

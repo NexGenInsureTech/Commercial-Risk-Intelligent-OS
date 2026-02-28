@@ -1,14 +1,25 @@
 
-import { renderDashboard } from "./ui/dashboard.js";
-import { renderPortfolio } from "./ui/portfolio.js";
-import { renderIntake } from "./modules/intakeModule.js";
+import { navigate } from "./core/router.js";
+import { subscribe, getState } from "./core/stateManager.js";
 
 const mainView = document.getElementById("mainView");
+const buttons = document.querySelectorAll("[data-route]");
 
-window.navigate = function(page) {
-  if (page === "dashboard") renderDashboard(mainView);
-  if (page === "portfolio") renderPortfolio(mainView);
-  if (page === "intake") renderIntake(mainView);
-};
+buttons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    navigate(btn.dataset.route, mainView);
+    updateActive(btn.dataset.route);
+  });
+});
 
-navigate("dashboard");
+function updateActive(route) {
+  buttons.forEach(b => b.classList.remove("active"));
+  document.querySelector(`[data-route="${route}"]`).classList.add("active");
+}
+
+subscribe((state) => {
+  navigate(state.currentRoute, mainView);
+});
+
+navigate("dashboard", mainView);
+updateActive("dashboard");

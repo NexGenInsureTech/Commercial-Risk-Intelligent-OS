@@ -1,17 +1,17 @@
 
-import { getAllProspects } from "../modules/mockDB.js";
+import { getState } from "../core/stateManager.js";
 import { aggregatePortfolio } from "../core/portfolioEngine.js";
 
 export function renderPortfolio(container) {
-  const data = getAllProspects();
+  const data = getState().prospects;
   const summary = aggregatePortfolio(data);
 
   container.innerHTML = `
     <div class="card">
-      <h2>Portfolio Summary</h2>
+      <h2>Portfolio Overview</h2>
       <p>Total: ${summary.total}</p>
       <p>High Risk: ${summary.highRisk}</p>
-      <p>High Risk %: ${summary.highRiskPercentage}%</p>
+      <p>Average Score: ${summary.avgScore}</p>
     </div>
   `;
 }

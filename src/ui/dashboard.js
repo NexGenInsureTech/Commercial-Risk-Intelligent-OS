@@ -1,11 +1,13 @@
 
-import { getAllProspects } from "../modules/mockDB.js";
+import { getState } from "../core/stateManager.js";
 
 export function renderDashboard(container) {
-  const data = getAllProspects();
+  const data = getState().prospects;
+
   container.innerHTML = `
     <div class="card">
-      <h2>Total Prospects: ${data.length}</h2>
+      <h2>Dashboard</h2>
+      <p>Total Prospects: ${data.length}</p>
     </div>
   `;
 }
